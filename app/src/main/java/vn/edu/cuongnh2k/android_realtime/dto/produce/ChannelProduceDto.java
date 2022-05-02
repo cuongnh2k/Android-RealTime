@@ -15,10 +15,10 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
     private ChannelEnum type;
 
     @SerializedName("userChannels")
-    private List<UserChannelProduceDto> userChannels;
+    private List<Object> userChannels;
 
     @SerializedName("messages")
-    private List<MessageProduceDto> messages;
+    private List<Object> messages;
 
     public ChannelProduceDto() {
     }
@@ -29,8 +29,8 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
             Long updatedDate,
             String name,
             ChannelEnum type,
-            List<UserChannelProduceDto> userChannels,
-            List<MessageProduceDto> messages) {
+            List<Object> userChannels,
+            List<Object> messages) {
         super(id, createdDate, updatedDate);
         this.name = name;
         this.type = type;
@@ -54,19 +54,19 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
         this.type = type;
     }
 
-    public List<UserChannelProduceDto> getUserChannels() {
+    public List<Object> getUserChannels() {
         return userChannels;
     }
 
-    public void setUserChannels(List<UserChannelProduceDto> userChannels) {
+    public void setUserChannels(List<Object> userChannels) {
         this.userChannels = userChannels;
     }
 
-    public List<MessageProduceDto> getMessages() {
+    public List<Object> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<MessageProduceDto> messages) {
+    public void setMessages(List<Object> messages) {
         this.messages = messages;
     }
 }

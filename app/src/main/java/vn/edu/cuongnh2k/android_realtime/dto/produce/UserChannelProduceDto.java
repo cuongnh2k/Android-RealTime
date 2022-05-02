@@ -8,10 +8,10 @@ public class UserChannelProduceDto extends BaseDataProduceDto<Long> {
     private String name;
 
     @SerializedName("user")
-    private UserProduceDto user;
+    private Object user;
 
     @SerializedName("channel")
-    private ChannelProduceDto channel;
+    private Object channel;
 
     public UserChannelProduceDto() {
     }
@@ -20,8 +20,8 @@ public class UserChannelProduceDto extends BaseDataProduceDto<Long> {
                                  Long createdDate,
                                  Long updatedDate,
                                  String name,
-                                 UserProduceDto user,
-                                 ChannelProduceDto channel) {
+                                 Object user,
+                                 Object channel) {
         super(id, createdDate, updatedDate);
         this.name = name;
         this.user = user;
@@ -36,19 +36,19 @@ public class UserChannelProduceDto extends BaseDataProduceDto<Long> {
         this.name = name;
     }
 
-    public UserProduceDto getUser() {
+    public Object getUser() {
         return user;
     }
 
-    public void setUser(UserProduceDto user) {
+    public void setUser(Object user) {
         this.user = user;
     }
 
-    public ChannelProduceDto getChannel() {
+    public Object getChannel() {
         return channel;
     }
 
-    public void setChannel(ChannelProduceDto channel) {
+    public void setChannel(Object channel) {
         this.channel = channel;
     }
 }

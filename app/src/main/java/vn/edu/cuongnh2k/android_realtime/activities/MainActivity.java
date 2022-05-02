@@ -42,37 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
     }
 
-//    private void connectStomp() {
-//        // replace your websocket url
-//        mStompClient = Stomp.over(WebSocket.class, "ws://localhost:8000/StompApp/websocket");
-//        // replace with your topics
-//        mStompClient.topic("/topic/Mytopics")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(topicMessage -> {
-//
-//                    toast("" + topicMessage.getPayload());
-//                });
-//
-//
-//        mStompClient.connect();
-//        mStompClient.lifecycle()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(lifecycleEvent -> {
-//                    switch (lifecycleEvent.getType()) {
-//                        case OPENED:
-//                            toast("Stomp connection opened");
-//                            break;
-//                        case ERROR:
-//                            toast("Stomp connection error");
-//                            break;
-//                        case CLOSED:
-//                            toast("Stomp connection closed");
-//                    }
-//                });
-//    }
-
     private Boolean checkToken() {
         return getSharedPreferences(
                 "RealTime",

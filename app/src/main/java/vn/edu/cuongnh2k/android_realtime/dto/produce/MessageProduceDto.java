@@ -19,10 +19,10 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
     private MessageEnum type;
 
     @SerializedName("user")
-    private UserProduceDto user;
+    private Object user;
 
     @SerializedName("channel")
-    private ChannelProduceDto channel;
+    private Object channel;
 
     public MessageProduceDto() {
     }
@@ -34,8 +34,8 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
                              String updatedBy,
                              String content,
                              MessageEnum type,
-                             UserProduceDto user,
-                             ChannelProduceDto channel) {
+                             Object user,
+                             Object channel) {
         super(id, createdDate, updatedDate);
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
@@ -43,6 +43,22 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
         this.type = type;
         this.user = user;
         this.channel = channel;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public String getContent() {
@@ -61,35 +77,19 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
         this.type = type;
     }
 
-    public UserProduceDto getUser() {
+    public Object getUser() {
         return user;
     }
 
-    public void setUser(UserProduceDto user) {
+    public void setUser(Object user) {
         this.user = user;
     }
 
-    public ChannelProduceDto getChannel() {
+    public Object getChannel() {
         return channel;
     }
 
-    public void setChannel(ChannelProduceDto channel) {
+    public void setChannel(Object channel) {
         this.channel = channel;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
     }
 }
