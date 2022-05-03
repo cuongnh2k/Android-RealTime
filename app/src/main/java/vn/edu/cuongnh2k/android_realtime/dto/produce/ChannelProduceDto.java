@@ -14,6 +14,9 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
     @SerializedName("type")
     private ChannelEnum type;
 
+    @SerializedName("avatar")
+    private String avatar;
+
     @SerializedName("userChannels")
     private List<Object> userChannels;
 
@@ -29,6 +32,7 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
             Long updatedDate,
             String name,
             ChannelEnum type,
+            String avatar,
             List<Object> userChannels,
             List<Object> messages) {
         super(id, createdDate, updatedDate);
@@ -68,5 +72,13 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
 
     public void setMessages(List<Object> messages) {
         this.messages = messages;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
