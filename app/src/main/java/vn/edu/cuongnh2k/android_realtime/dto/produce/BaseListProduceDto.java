@@ -71,5 +71,16 @@ public class BaseListProduceDto implements Serializable {
     public void setTotalElements(Long totalElements) {
         this.totalElements = totalElements;
     }
+
+    @Override
+    public String toString() {
+        return "BaseListProduceDto{" +
+                "content=" + content +
+                ", page=" + page +
+                ", size=" + size +
+                ", totalPages=" + totalPages +
+                ", totalElements=" + totalElements +
+                '}';
+    }
 }
 

@@ -19,16 +19,16 @@ public class UserProduceDto extends BaseDataProduceDto<Long> {
     private String avatar;
 
     @SerializedName("roles")
-    private List<Object> roles;
+    private List<RoleProduceDto> roles;
 
     @SerializedName("devices")
-    private List<Object> devices;
+    private List<DeviceProduceDto> devices;
 
     @SerializedName("userChannels")
-    private List<Object> userChannels;
+    private List<UserChannelProduceDto> userChannels;
 
     @SerializedName("messages")
-    private List<Object> messages;
+    private List<MessageProduceDto> messages;
 
     public UserProduceDto() {
     }
@@ -41,10 +41,10 @@ public class UserProduceDto extends BaseDataProduceDto<Long> {
             String firstName,
             String lastName,
             String avatar,
-            List<Object> roles,
-            List<Object> devices,
-            List<Object> userChannels,
-            List<Object> messages) {
+            List<RoleProduceDto> roles,
+            List<DeviceProduceDto> devices,
+            List<UserChannelProduceDto> userChannels,
+            List<MessageProduceDto> messages) {
         super(id, createdDate, updatedDate);
         this.email = email;
         this.firstName = firstName;
@@ -88,49 +88,35 @@ public class UserProduceDto extends BaseDataProduceDto<Long> {
         this.avatar = avatar;
     }
 
-    public List<Object> getRoles() {
+    public List<RoleProduceDto> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Object> roles) {
+    public void setRoles(List<RoleProduceDto> roles) {
         this.roles = roles;
     }
 
-    public List<Object> getDevices() {
+    public List<DeviceProduceDto> getDevices() {
         return devices;
     }
 
-    public void setDevices(List<Object> devices) {
+    public void setDevices(List<DeviceProduceDto> devices) {
         this.devices = devices;
     }
 
-    public List<Object> getUserChannels() {
+    public List<UserChannelProduceDto> getUserChannels() {
         return userChannels;
     }
 
-    public void setUserChannels(List<Object> userChannels) {
+    public void setUserChannels(List<UserChannelProduceDto> userChannels) {
         this.userChannels = userChannels;
     }
 
-    public List<Object> getMessages() {
+    public List<MessageProduceDto> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<Object> messages) {
+    public void setMessages(List<MessageProduceDto> messages) {
         this.messages = messages;
-    }
-
-    @Override
-    public String toString() {
-        return "UserProduceDto{" +
-                "email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", roles=" + roles +
-                ", devices=" + devices +
-                ", userChannels=" + userChannels +
-                ", messages=" + messages +
-                "} " + super.toString();
     }
 }

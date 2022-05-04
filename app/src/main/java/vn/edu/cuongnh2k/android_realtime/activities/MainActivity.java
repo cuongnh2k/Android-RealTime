@@ -1,5 +1,6 @@
 package vn.edu.cuongnh2k.android_realtime.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -23,7 +25,6 @@ import vn.edu.cuongnh2k.android_realtime.api.BasicApi;
 import vn.edu.cuongnh2k.android_realtime.api.DeviceApi;
 import vn.edu.cuongnh2k.android_realtime.api.UserApi;
 import vn.edu.cuongnh2k.android_realtime.databinding.ActivityMainBinding;
-import vn.edu.cuongnh2k.android_realtime.dto.produce.BaseDataProduceDto;
 import vn.edu.cuongnh2k.android_realtime.dto.produce.BaseProduceDto;
 import vn.edu.cuongnh2k.android_realtime.dto.produce.TokenProduceDto;
 import vn.edu.cuongnh2k.android_realtime.dto.produce.UserProduceDto;
@@ -31,7 +32,6 @@ import vn.edu.cuongnh2k.android_realtime.dto.produce.UserProduceDto;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-//    private StompClient mStompClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,37 +41,6 @@ public class MainActivity extends AppCompatActivity {
         detailUser();
         setListeners();
     }
-
-//    private void connectStomp() {
-//        // replace your websocket url
-//        mStompClient = Stomp.over(WebSocket.class, "ws://localhost:8000/StompApp/websocket");
-//        // replace with your topics
-//        mStompClient.topic("/topic/Mytopics")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(topicMessage -> {
-//
-//                    toast("" + topicMessage.getPayload());
-//                });
-//
-//
-//        mStompClient.connect();
-//        mStompClient.lifecycle()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(lifecycleEvent -> {
-//                    switch (lifecycleEvent.getType()) {
-//                        case OPENED:
-//                            toast("Stomp connection opened");
-//                            break;
-//                        case ERROR:
-//                            toast("Stomp connection error");
-//                            break;
-//                        case CLOSED:
-//                            toast("Stomp connection closed");
-//                    }
-//                });
-//    }
 
     private Boolean checkToken() {
         return getSharedPreferences(
@@ -83,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         binding.imageSignOut.setOnClickListener(v -> {
             logout();
         });
+        binding.fabNewChat.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), UsersActivity.class));
+        });
     }
 
     private void showToast(String message) {
@@ -91,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void detailUser() {
         if (!checkToken()) {
-            startActivity(new Intent(getApplicationContext(), vn.edu.cuongnh2k.android_realtime.activities.SignInActivity.class));
+            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
         } else {
             Map<String, String> map = new HashMap<>();
             map.put("User-Agent", new WebView(this).getSettings().getUserAgentString());
@@ -101,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
                             "RealTime",
                             Context.MODE_PRIVATE).getString("accessToken", null));
             UserApi.BASE_API.detailUser(map).enqueue(new Callback<BaseProduceDto>() {
+                @SuppressLint("SetTextI18n")
                 @Override
-                public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                     if (response.isSuccessful()) {
                         UserProduceDto userProduceDto = new Gson().fromJson(
                                 new Gson().toJson(response.body().getData()),
@@ -121,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                                         Context.MODE_PRIVATE).getString("refreshToken", null));
                         BasicApi.BASE_API.refresh(map).enqueue(new Callback<BaseProduceDto>() {
                             @Override
-                            public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                            public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                                 if (response.isSuccessful()) {
                                     TokenProduceDto tokenProduceDto = new Gson().fromJson(
                                             new Gson().toJson(response.body().getData()),
@@ -139,19 +112,19 @@ public class MainActivity extends AppCompatActivity {
                                             Context.MODE_PRIVATE);
                                     sharedPreferences.edit().remove("accessToken").apply();
                                     sharedPreferences.edit().remove("refreshToken").apply();
-                                    startActivity(new Intent(getApplicationContext(), vn.edu.cuongnh2k.android_realtime.activities.SignInActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                            public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                             }
                         });
                     }
                 }
 
                 @Override
-                public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                 }
             });
         }
@@ -159,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() {
         if (!checkToken()) {
-            startActivity(new Intent(getApplicationContext(), vn.edu.cuongnh2k.android_realtime.activities.SignInActivity.class));
+            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
         } else {
             loading(true);
             Map<String, String> map = new HashMap<>();
@@ -171,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                             Context.MODE_PRIVATE).getString("accessToken", null));
             DeviceApi.BASE_API.logout(map).enqueue(new Callback<BaseProduceDto>() {
                 @Override
-                public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                     if (response.isSuccessful()) {
                         showToast(response.body().getMessage());
                         SharedPreferences sharedPreferences = getSharedPreferences(
@@ -179,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                                 Context.MODE_PRIVATE);
                         sharedPreferences.edit().remove("accessToken").apply();
                         sharedPreferences.edit().remove("refreshToken").apply();
-                        startActivity(new Intent(getApplicationContext(), vn.edu.cuongnh2k.android_realtime.activities.SignInActivity.class));
+                        startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                     } else {
                         Map<String, String> map = new HashMap<>();
                         map.put("User-Agent", new WebView(binding.getRoot().getContext()).getSettings().getUserAgentString());
@@ -190,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                         Context.MODE_PRIVATE).getString("refreshToken", null));
                         BasicApi.BASE_API.refresh(map).enqueue(new Callback<BaseProduceDto>() {
                             @Override
-                            public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                            public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                                 if (response.isSuccessful()) {
                                     TokenProduceDto tokenProduceDto = new Gson().fromJson(
                                             new Gson().toJson(response.body().getData()),
@@ -208,13 +181,13 @@ public class MainActivity extends AppCompatActivity {
                                             Context.MODE_PRIVATE);
                                     sharedPreferences.edit().remove("accessToken").apply();
                                     sharedPreferences.edit().remove("refreshToken").apply();
-                                    startActivity(new Intent(getApplicationContext(), vn.edu.cuongnh2k.android_realtime.activities.SignInActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                                 }
                                 loading(false);
                             }
 
                             @Override
-                            public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                            public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                             }
                         });
                     }
@@ -222,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                 }
             });
         }

@@ -45,6 +45,22 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
         this.channel = channel;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
     public String getContent() {
         return content;
     }
@@ -75,21 +91,5 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
 
     public void setChannel(ChannelProduceDto channel) {
         this.channel = channel;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
     }
 }
