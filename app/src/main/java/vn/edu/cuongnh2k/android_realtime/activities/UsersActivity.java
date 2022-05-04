@@ -4,15 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +22,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import vn.edu.cuongnh2k.android_realtime.R;
 import vn.edu.cuongnh2k.android_realtime.adapters.UserAdapter;
 import vn.edu.cuongnh2k.android_realtime.api.BasicApi;
 import vn.edu.cuongnh2k.android_realtime.api.ChannelApi;
@@ -49,20 +50,28 @@ public class UsersActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE).getString("accessToken", null) != null;
     }
 
-    private void showToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    private void showErrorMessage() {
+        binding.textErrorMessage.setText(String.format("%s", "No channel available"));
+        binding.textErrorMessage.setVisibility(View.VISIBLE);
+    }
+
+    private void loading(Boolean isLoading) {
+        if (isLoading) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+        } else {
+            binding.progressBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void setListeners() {
-        binding.imageBack.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        });
+        binding.imageBack.setOnClickListener(v -> onBackPressed());
     }
 
     private void getAllChannel() {
         if (!checkToken()) {
             startActivity(new Intent(getApplicationContext(), SignInActivity.class));
         } else {
+            loading(true);
             Map<String, String> headers = new HashMap<>();
             headers.put("User-Agent", new WebView(this).getSettings().getUserAgentString());
             headers.put(
@@ -70,31 +79,27 @@ public class UsersActivity extends AppCompatActivity {
                     "Bearer " + getSharedPreferences(
                             "RealTime",
                             Context.MODE_PRIVATE).getString("accessToken", null));
-
             Map<String, String> params = new HashMap<>();
             params.put("page", "0");
             params.put("size", "100");
-
-            ChannelApi.BASE_API.getAllChannel(headers).enqueue(new Callback<BaseProduceDto>() {
+            ChannelApi.BASE_API.getAllChannel(headers, params).enqueue(new Callback<BaseProduceDto>() {
                 @Override
-                public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                     if (response.isSuccessful()) {
                         BaseListProduceDto baseListProduceDto = new Gson().fromJson(
                                 new Gson().toJson(response.body().getData()),
                                 BaseListProduceDto.class);
-
-                        List<ChannelProduceDto> channelProduceDto=new Gson().fromJson(
-                                new Gson().toJson(baseListProduceDto.getContent()),
-                                (Type) ChannelProduceDto.class);
-
-                        RecyclerView lvDanhBa;
-                        List<ChannelProduceDto> dsDanhBa;
-                        UserAdapter channelAdapter;
-                        lvDanhBa = binding.usersRecyclerView;
-
-                        channelAdapter = new UserAdapter(UsersActivity.this, R.layout.item_container_user, channelProduceDto);
-                        lvDanhBa.setAdapter(channelAdapter);
-
+                        Type listType = new TypeToken<List<ChannelProduceDto>>() {
+                        }.getType();
+                        ArrayList<ChannelProduceDto> channelProduceDto = new Gson().fromJson(
+                                new Gson().toJson(baseListProduceDto.getContent()), listType);
+                        if (channelProduceDto.size() > 0) {
+                            UserAdapter userAdapter = new UserAdapter(channelProduceDto);
+                            binding.usersRecyclerView.setAdapter(userAdapter);
+                            binding.usersRecyclerView.setVisibility(View.VISIBLE);
+                        } else {
+                            showErrorMessage();
+                        }
                     } else {
                         Map<String, String> map = new HashMap<>();
                         map.put("User-Agent", new WebView(binding.getRoot().getContext()).getSettings().getUserAgentString());
@@ -105,7 +110,7 @@ public class UsersActivity extends AppCompatActivity {
                                         Context.MODE_PRIVATE).getString("refreshToken", null));
                         BasicApi.BASE_API.refresh(map).enqueue(new Callback<BaseProduceDto>() {
                             @Override
-                            public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                            public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                                 if (response.isSuccessful()) {
                                     TokenProduceDto tokenProduceDto = new Gson().fromJson(
                                             new Gson().toJson(response.body().getData()),
@@ -125,17 +130,19 @@ public class UsersActivity extends AppCompatActivity {
                                     sharedPreferences.edit().remove("refreshToken").apply();
                                     startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                                 }
+                                loading(false);
                             }
 
                             @Override
-                            public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                            public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                             }
                         });
                     }
+                    loading(false);
                 }
 
                 @Override
-                public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                 }
             });
         }

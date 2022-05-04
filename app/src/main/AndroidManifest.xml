@@ -15,8 +15,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".activities.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.UsersActivity"
-            android:windowSoftInputMode="adjustResize"  />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize" />

@@ -12,7 +12,7 @@ public class RoleProduceDto extends BaseDataProduceDto<Long> {
     private RoleEnum name;
 
     @SerializedName("users")
-    private List<Object> users;
+    private List<UserProduceDto> users;
 
     public RoleProduceDto() {
     }
@@ -22,7 +22,7 @@ public class RoleProduceDto extends BaseDataProduceDto<Long> {
             Long createdDate,
             Long updatedDate,
             RoleEnum name,
-            List<Object> users) {
+            List<UserProduceDto> users) {
         super(id, createdDate, updatedDate);
         this.name = name;
         this.users = users;
@@ -36,11 +36,11 @@ public class RoleProduceDto extends BaseDataProduceDto<Long> {
         this.name = name;
     }
 
-    public List<Object> getUsers() {
+    public List<UserProduceDto> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Object> users) {
+    public void setUsers(List<UserProduceDto> users) {
         this.users = users;
     }
 }

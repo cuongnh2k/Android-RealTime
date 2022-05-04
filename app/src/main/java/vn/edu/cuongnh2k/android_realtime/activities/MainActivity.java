@@ -1,5 +1,6 @@
 package vn.edu.cuongnh2k.android_realtime.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -71,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
                             "RealTime",
                             Context.MODE_PRIVATE).getString("accessToken", null));
             UserApi.BASE_API.detailUser(map).enqueue(new Callback<BaseProduceDto>() {
+                @SuppressLint("SetTextI18n")
                 @Override
-                public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                     if (response.isSuccessful()) {
                         UserProduceDto userProduceDto = new Gson().fromJson(
                                 new Gson().toJson(response.body().getData()),
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                                         Context.MODE_PRIVATE).getString("refreshToken", null));
                         BasicApi.BASE_API.refresh(map).enqueue(new Callback<BaseProduceDto>() {
                             @Override
-                            public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                            public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                                 if (response.isSuccessful()) {
                                     TokenProduceDto tokenProduceDto = new Gson().fromJson(
                                             new Gson().toJson(response.body().getData()),
@@ -114,14 +117,14 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                            public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                             }
                         });
                     }
                 }
 
                 @Override
-                public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                 }
             });
         }
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                             Context.MODE_PRIVATE).getString("accessToken", null));
             DeviceApi.BASE_API.logout(map).enqueue(new Callback<BaseProduceDto>() {
                 @Override
-                public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                     if (response.isSuccessful()) {
                         showToast(response.body().getMessage());
                         SharedPreferences sharedPreferences = getSharedPreferences(
@@ -160,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                         Context.MODE_PRIVATE).getString("refreshToken", null));
                         BasicApi.BASE_API.refresh(map).enqueue(new Callback<BaseProduceDto>() {
                             @Override
-                            public void onResponse(Call<BaseProduceDto> call, Response<BaseProduceDto> response) {
+                            public void onResponse(@NonNull Call<BaseProduceDto> call, @NonNull Response<BaseProduceDto> response) {
                                 if (response.isSuccessful()) {
                                     TokenProduceDto tokenProduceDto = new Gson().fromJson(
                                             new Gson().toJson(response.body().getData()),
@@ -184,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                            public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                             }
                         });
                     }
@@ -192,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<BaseProduceDto> call, Throwable t) {
+                public void onFailure(@NonNull Call<BaseProduceDto> call, @NonNull Throwable t) {
                 }
             });
         }

@@ -19,10 +19,10 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
     private MessageEnum type;
 
     @SerializedName("user")
-    private Object user;
+    private UserProduceDto user;
 
     @SerializedName("channel")
-    private Object channel;
+    private ChannelProduceDto channel;
 
     public MessageProduceDto() {
     }
@@ -34,8 +34,8 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
                              String updatedBy,
                              String content,
                              MessageEnum type,
-                             Object user,
-                             Object channel) {
+                             UserProduceDto user,
+                             ChannelProduceDto channel) {
         super(id, createdDate, updatedDate);
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
@@ -77,19 +77,19 @@ public class MessageProduceDto extends BaseDataProduceDto<Long> {
         this.type = type;
     }
 
-    public Object getUser() {
+    public UserProduceDto getUser() {
         return user;
     }
 
-    public void setUser(Object user) {
+    public void setUser(UserProduceDto user) {
         this.user = user;
     }
 
-    public Object getChannel() {
+    public ChannelProduceDto getChannel() {
         return channel;
     }
 
-    public void setChannel(Object channel) {
+    public void setChannel(ChannelProduceDto channel) {
         this.channel = channel;
     }
 }

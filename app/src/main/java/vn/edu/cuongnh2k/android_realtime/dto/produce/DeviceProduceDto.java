@@ -8,7 +8,7 @@ public class DeviceProduceDto extends BaseDataProduceDto<Long> {
     private String userAgent;
 
     @SerializedName("user")
-    private Object user;
+    private UserProduceDto user;
 
     public DeviceProduceDto() {
     }
@@ -17,7 +17,7 @@ public class DeviceProduceDto extends BaseDataProduceDto<Long> {
                             Long createdDate,
                             Long updatedDate,
                             String userAgent,
-                            Object user) {
+                            UserProduceDto user) {
         super(id, createdDate, updatedDate);
         this.userAgent = userAgent;
         this.user = user;
@@ -31,11 +31,11 @@ public class DeviceProduceDto extends BaseDataProduceDto<Long> {
         this.userAgent = userAgent;
     }
 
-    public Object getUser() {
+    public UserProduceDto getUser() {
         return user;
     }
 
-    public void setUser(Object user) {
+    public void setUser(UserProduceDto user) {
         this.user = user;
     }
 }

@@ -11,5 +11,6 @@
     <string name="last_name">Last Name</string>
     <string name="welcome_back">Welcome Back!</string>
     <string name="login_to_continue">Login To Continue</string>
-    <string name="select_user">Select User</string>
+    <string name="select_channel">Select channel</string>
+    <string name="type_a_message">Type a message</string>
 </resources>

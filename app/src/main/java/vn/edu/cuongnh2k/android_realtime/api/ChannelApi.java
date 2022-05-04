@@ -8,7 +8,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.QueryMap;
@@ -26,5 +25,6 @@ public interface ChannelApi {
 
     @GET("/api/v1/channel/user")
     Call<BaseProduceDto> getAllChannel(
-            @HeaderMap Map<String, String> headers);
+            @HeaderMap Map<String, String> headers,
+            @QueryMap Map<String,String> params);
 }

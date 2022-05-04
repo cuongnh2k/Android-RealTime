@@ -18,10 +18,10 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
     private String avatar;
 
     @SerializedName("userChannels")
-    private List<Object> userChannels;
+    private List<UserChannelProduceDto> userChannels;
 
     @SerializedName("messages")
-    private List<Object> messages;
+    private List<MessageProduceDto> messages;
 
     public ChannelProduceDto() {
     }
@@ -33,8 +33,8 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
             String name,
             ChannelEnum type,
             String avatar,
-            List<Object> userChannels,
-            List<Object> messages) {
+            List<UserChannelProduceDto> userChannels,
+            List<MessageProduceDto> messages) {
         super(id, createdDate, updatedDate);
         this.name = name;
         this.type = type;
@@ -58,27 +58,27 @@ public class ChannelProduceDto extends BaseDataProduceDto<Long> {
         this.type = type;
     }
 
-    public List<Object> getUserChannels() {
-        return userChannels;
-    }
-
-    public void setUserChannels(List<Object> userChannels) {
-        this.userChannels = userChannels;
-    }
-
-    public List<Object> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Object> messages) {
-        this.messages = messages;
-    }
-
     public String getAvatar() {
         return avatar;
     }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public List<UserChannelProduceDto> getUserChannels() {
+        return userChannels;
+    }
+
+    public void setUserChannels(List<UserChannelProduceDto> userChannels) {
+        this.userChannels = userChannels;
+    }
+
+    public List<MessageProduceDto> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<MessageProduceDto> messages) {
+        this.messages = messages;
     }
 }
