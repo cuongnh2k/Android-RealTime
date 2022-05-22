@@ -1,6 +1,5 @@
 package vn.edu.cuongnh2k.android_realtime.api;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Map;
@@ -14,11 +13,9 @@ import vn.edu.cuongnh2k.android_realtime.dto.produce.BaseProduceDto;
 
 public interface UserApi {
 
-    Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
     UserApi BASE_API = new Retrofit.Builder()
-            .baseUrl("http://13.213.53.246")
-            .addConverterFactory(GsonConverterFactory.create(GSON))
+            .baseUrl(Domain.domain)
+            .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()))
             .build()
             .create(UserApi.class);
 

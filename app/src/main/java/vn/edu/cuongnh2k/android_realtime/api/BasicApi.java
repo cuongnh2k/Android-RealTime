@@ -19,11 +19,9 @@ import vn.edu.cuongnh2k.android_realtime.dto.produce.BaseProduceDto;
 
 public interface BasicApi {
 
-    Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
     BasicApi BASE_API = new Retrofit.Builder()
-            .baseUrl("http://13.213.53.246")
-            .addConverterFactory(GsonConverterFactory.create(GSON))
+            .baseUrl(Domain.domain)
+            .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()))
             .build()
             .create(BasicApi.class);
 
